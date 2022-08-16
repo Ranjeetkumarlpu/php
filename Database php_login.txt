@@ -1,0 +1,179 @@
+Today's topics covered:
+
+1) Complete Login-Logout Program with use of Session & Cookies in PHP:
+       login.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+USERNAME:
+<input type="text" name="txtnm" value="<?php
+if(isset($_COOKIE['un']))
+{
+echo $_COOKIE['un'];
+}
+else
+{
+echo "";
+}
+
+?>">
+<br>
+PASSWORD:
+<input type="password" name="txtpass" value="<?php
+if(isset($_COOKIE['up']))
+{
+echo $_COOKIE['up'];
+}
+else
+{
+echo "";
+}
+
+?>">
+<br>
+<input type="checkbox" name="chk" <?php
+if(isset($_COOKIE['up']))
+{
+echo "checked";
+}
+else
+{
+echo "";
+}
+
+?> value="rem">Remember me
+<br>
+<input type="submit" name="btn1" value="LOGIN">
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+$u="admin";
+$p="123";
+
+if($_POST["txtnm"]==$u && $_POST["txtpass"]==$p)
+{
+session_start();
+$_SESSION["uname"]=$_POST["txtnm"];// session store
+if(isset($_POST["chk"])) // if checkbox is checked
+{
+setcookie("un",$_POST["txtnm"],time()+20*100*400);
+setcookie("up",$_POST["txtpass"],time()+20*100*400);
+}
+else // if checkbox is unchecked
+{
+setcookie("un","",time()-1); // for delete cookie
+setcookie("up","",time()-1);
+}
+
+header("Location:inbox.php");
+}
+else
+{
+echo "Invalid Login";
+}
+
+}
+
+?>
+</body>
+</html>
+image.png
+     inbox.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<h1>Welcome <?php
+session_start();
+if($_SESSION["uname"]==null)
+{
+header("Location:login.php");
+}
+else
+{
+echo $_SESSION["uname"];
+}
+
+    ?>
+</h1>
+<a href="logout.php">LOGOUT</a>
+</body>
+</html>
+image.png
+     logout.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+session_start();
+unset($_SESSION["uname"]);
+header("Location:login.php");
+?>
+</body>
+</html>
+
+2) Notes on Database:
+Database:
+
+ What is Database?
+    Database is a file in a server, which is used to store user data and supply those data for future use.
+
+    Example:
+      MySQL, MS SQL Server, Oracle, PostgreSQL, MongoDB etc.
+
+      Basically we will use the database MySQL for PHP and later use MongoDB for PHP.
+
+      Database used as a storage for Server Side programming.
+
+      What is the Table of Database?
+
+      Table is a part of Database which is formed a structure with row & column to organize data in proper manner or table structure.
+
+      MySQL Database is also provided by XAMPP or WAMP Software, it gives an interface named PHPMYADMIN.
+
+      Steps:
+      1) Start XAMPP or WAMP,
+      2) Open Web browser, and write the web address "localhost/phpmyadmin".
+      3) It asks for a username, so we give the username "root" and click on "OK".
+      4) Click on the option "Databases", write down database name and click on "Create".
+      5) Fill up the field name, datatype and length, then click on "Save".
+      6)  If you want to insert any data, click on the option "insert" and fill up the boxes, then click on "Go". Then click on the option "Browse" to view the inserted data.   
+
+3) Example of a Sample Database with table structure:
+    Database Name: nsti
+    Table Name: students
+Table Structure:
+image.png
+Table Browse:
+image.png
+
+Homework:
+  Create a Database with a table as per following instructions:
+
+Database name: ITI
+
+Table name: trainees
+
+Table Structure:
+
+   Field                  Datatype          Length
+    tid                       int                     4
+   tname                 varchar              50
+   address              varchar             255
+   phone                  varchar              10
+   email                   varchar              50
+   trade_name         varchar              30
+   admission_date    date                  12
+  course_fees           bigint                 8
+
+The the above structure in PHPMYADMIN.

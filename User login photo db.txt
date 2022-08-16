@@ -1,0 +1,173 @@
+Today's topics covered:
+
+1) Create a Database: usersdb and follow the structure of table of this database:
+The structure of table:
+image.png
+
+2) Sign Up for add new username and password into database with uploading user photo by PHP:
+     newuser.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+USERNAME:
+<input type="text" name="txtun">
+<br>
+PASSWORD:
+<input type="password" name="txtup">
+<br>
+Select Profile Photo:
+<input type="file" name="txtphoto">
+<br>
+<input type="submit" name="btn1" value="REGISTER">
+<br>
+<a href="userlogin.php">LOGIN</a>
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+$a=$_POST["txtun"];
+$b=$_POST["txtup"];
+$filename=$_FILES["txtphoto"]["name"];
+// echo "<br>The file name=".$filename."<br>";
+$tmp=$_FILES["txtphoto"]["tmp_name"];
+move_uploaded_file($tmp, "photo/".$filename);
+$con=mysqli_connect("localhost","root","","usersdb");
+// echo "a=".$a."<br>";
+// echo "b=".$b."<br>";
+if($con)
+{
+$q="INSERT INTO `users` (`username`, `userpassword`, `photo`) VALUES ('$a', '$b', '$filename');";
+// ` backquote
+$r=mysqli_query($con,$q);
+if($r)
+{
+echo "New User Added";
+}
+else
+{
+echo "Not Added";
+}
+}
+else
+{
+echo "Not connect";
+}
+}
+?>
+</body>
+</html>
+image.png
+And data is added to Database as per follows
+
+image.png
+
+3) Login by username and password from the database and goto the next page for displaying the username and user photo:
+  userlogin.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+USERNAME:
+<input type="text" name="txtun">
+<br>
+PASSWORD:
+<input type="password" name="txtup">
+<br>
+<input type="submit" name="btn1" value="LOGIN">
+<br>
+<a href="newuser.php">NEW USER</a>
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+$a=$_POST["txtun"];
+$b=$_POST["txtup"];
+$con=mysqli_connect("localhost","root","","usersdb");
+if($con)
+{
+$q="select * from users where username='$a' and userpassword='$b'";
+$r=mysqli_query($con,$q);
+$c=mysqli_num_rows($r);
+if($c>0)
+{
+//echo "Login succeed";
+session_start();
+$_SESSION["un"]=$a;
+while($f=mysqli_fetch_array($r))
+{
+$photo=$f[2]; // get the filename of photo
+}
+
+$_SESSION["photo"]=$photo;
+
+header("Location:userinbox.php");
+}
+else
+{
+echo "Invalid Login";
+}
+}
+else
+{
+echo "Not connect";
+}
+mysqli_close($con);
+}
+
+?>
+</body>
+</html>
+image.png
+userinbox.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+#header
+{
+background:skyBlue;
+height:100px;
+}
+
+#names
+{
+float:left;
+border:0px solid black;
+width:800px;
+}
+
+#pics
+{
+float:left;
+text-align: right;
+border:0px solid red;
+}
+</style>
+</head>
+<body>
+<h1 id="header">
+<div id="names">
+Welcome
+<?php
+session_start();
+echo $_SESSION["un"];
+?>
+<a href="changepassword.php">CHANGE PASSWORD</a>
+</div>
+<div id="pics">
+<img src="photo/<?php echo $_SESSION['photo']; ?>" height="80px" width="80px"></img>
+</div>
+</h1>
+</body>
+</html>
+image.png
+ Homework:
+   Do the homework as add a link "LOGOUT" within the Header bar [Skyblue colored bar] of previous program, and also do a logout program along with this. make sure after logout the login page could not go back to the previous page.

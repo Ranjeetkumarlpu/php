@@ -1,0 +1,277 @@
+Today's topics covered:
+
+1) Return type function in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+function multi($a,$b)
+{ // return type function
+$c=$a*$b;
+return $c;// return a value
+}
+
+$e=multi(4,7);
+echo $e;
+?>
+</body>
+</html>
+
+2) Notes on Session:
+SESSION in PHP:
+
+What is Session?
+  Session is a predefined variable stored user data in the server.
+
+  Advantages of Session:
+     1) Carry a data from one page to another page without form submission method.
+     2) Session mainly used in case of User Login-Logout Application.
+
+  PHP Functions used for Session:
+
+    session_start()= For start a Session,
+
+    $_SESSION[]=Session variable for store userdata
+
+    session_destroy()= For delete all session variables from server.
+
+3) Create, Display & Remove Session in PHP:
+
+  session_create.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$a=4;
+$b="HEllo";
+session_start(); // start a session
+$_SESSION["nm"]=$a;// data store into Session Variable
+$_SESSION["ab"]=$b;
+echo "Session created";
+?>
+</body>
+</html>
+
+  session_display.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+session_start();
+echo $_SESSION["nm"]; // display session variable
+echo "<br>";
+echo $_SESSION["ab"];
+?>
+</body>
+</html>
+
+  session_delete.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+session_start();
+//session_destroy(); // delete all session variable
+unset($_SESSION["nm"]);// delete specific session variable not all.
+?>
+</body>
+</html>
+
+4) Login_logout by session in PHP:
+
+  login.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+USERNAME:
+<input type="text" name="txtuname">
+<br>
+PASSWORD:
+<input type="password" name="txtupass">
+<br>
+<input type="submit" name="b1" value="LOGIN">
+</form>
+<?php
+if(isset($_POST["b1"]))
+{
+$u="admin";
+$p="123";
+
+if($u==$_POST["txtuname"] && $p==$_POST["txtupass"])
+{
+session_start();
+$_SESSION["un"]=$_POST["txtuname"];
+header("Location:inbox.php");
+}
+else
+{
+echo "Invalid Login";
+}
+
+
+}
+
+?>
+</body>
+</html>
+
+    inbox.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<h1>Welcome
+<?php
+session_start();
+
+if($_SESSION["un"]==null)
+{
+header("Location:login.php");
+}
+else
+{
+echo $_SESSION["un"];
+}
+
+?>
+</h1>
+<a href="logout.php">LOGOUT</a>
+</body>
+</html>
+
+  logout.php
+ <!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+session_start();
+unset($_SESSION["un"]);
+header("Location:login.php");
+?>
+</body>
+</html>
+
+5) Photo gallery Upload Program:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+.pic
+{
+background:skyBlue;
+height:130px;
+width:200px;
+padding:5px;
+float:left;
+margin:5px;
+}
+
+.pic img
+{
+height:100px;
+width: inherit;
+}
+</style>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+
+Select Picture:
+<input type="file" name="txtpic">
+<br>
+<input type="submit" name="btn" value="UPLOAD">
+
+</form>
+
+<?php
+if(isset($_POST["btn"]))
+{
+$fn=$_FILES["txtpic"]["name"];
+$t=$_FILES["txtpic"]["tmp_name"];
+
+move_uploaded_file($t, "pictures/".$fn);
+echo "Picture Uploaded<br>";
+}
+?>
+<form method="post">
+<input type="submit" value="DELETE" name="btn2">
+<?php
+$g=scandir("pictures");
+$i=1;
+foreach($g as $d)
+{
+if($d==".")
+{
+
+}
+else if($d=="..")
+{
+
+}
+else
+{
+echo "<div class='pic'>
+<img src='pictures/$d'></img>
+<input type='radio' name='rd' value='$d'>
+<span>$i</span>
+</div>";
+$i++;
+}
+
+}
+
+?>
+</form>
+
+<?php
+if(isset($_POST["btn2"]))
+{
+$f=$_POST["rd"];
+//echo "<br>Selected file name: ".$f;
+unlink("pictures/".$f);
+header("Location:pictgaller.php");// for reload the webpage
+}
+
+?>
+</body>
+</html>
+image.png
+
+__________________________
+Regards,
+
+Abhimonyu Dey
+Master Trainer [IT & Software]
+Edunet Foundation
+image.png
+w: https://edunetworld.com/
+___________________________
+--
+You received this message because you are subscribed to the Google Groups "ibm_nstihowrah_junior2020" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to ibm_nstihowrah_junior2020+unsubscribe@googlegroups.com.
+To post to this group, send email to ibm_nstihowrah_junior2020@googlegroups.com.
+To view this discussion on the web visit https://groups.google.com/d/msgid/ibm_nstihowrah_junior2020/CAPTDDG5%2B7%3D3Zt9mZfHugb3gfUeTfN_B9qBtS_utd2zdb4YXMtQ%40mail.gmail.com.
+For more options, visit https://groups.google.com/d/optout.
+Attachments area

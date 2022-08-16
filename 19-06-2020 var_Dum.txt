@@ -1,0 +1,199 @@
+Today's topics covered:
+
+1) Use of var_dump():
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+  $a=10;
+  $b=56.78;
+  $c="Hello";
+  $d=false;
+
+  echo var_dump($a);
+  // var_dump is used for get the datatype of the variable with it's value and line no. of codeing
+  // int= Integer; that means it represent number
+  echo "<br>";
+  echo var_dump($b);
+  echo "<br>";
+  echo var_dump($c);
+  echo "<br>";
+  echo var_dump($d);
+  echo "<br>";
+
+?>
+</body>
+</html>
+
+image.png
+
+2) Month name display in Drop Down by Array:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+Select Month:
+<select>
+<option></option>
+<?php
+$m=array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+
+foreach($m as $t)
+{
+echo "<option>$t</option>";
+}
+
+?>
+</select>
+
+</body>
+</html>
+
+image.png
+
+3) Text File write in PHP:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$f=fopen("myfile.txt","w");
+//fopen(filename,write mode)= Open a file in memory
+// w= Write Mode to create and write any text
+$s="NSTI College";
+fwrite($f, $s);
+// fwrite(file in memory, text of user)=Write the user text inside the file.
+fclose($f);
+// fclose(file in memory)=Close the file in memory
+echo "Maja aay gaya";
+
+?>
+</body>
+</html>
+
+4) Text File Read in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$e=fopen("myfile.txt","r");
+// r=Read Mode to read all content from a file.
+$c=fread($e, filesize("myfile.txt"));
+// fread(file in memory,filesize)=To read all content from file.
+// filesize(filename)=Get the file size in bytes
+echo $c;
+fclose($e);
+echo "<br>";
+echo "File Size:".filesize("myfile.txt")." bytes";
+
+?>
+</body>
+</html>
+
+5) Text File append in PHP:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$g=fopen("myfile.txt","a");
+// a= Append Mode for add the content inside a file
+$d=", Dasnagar, Kolkata";
+fwrite($g,$d);
+fclose($g);
+echo "File Edited";
+?>
+</body>
+</html>
+
+6) File remove in PHP:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$f="a.txt";
+
+unlink($f);
+// unlink(filename)=Delete a file.
+echo "File Deleted";
+
+?>
+</body>
+</html>
+
+7) multiple file delete in PHP:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$a=array("a.txt","b.txt");
+
+foreach($a as $h)
+{
+unlink($h);
+}
+
+echo "Files deleted";
+
+?>
+</body>
+</html>
+
+8) User comment store in Text File by PHP:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+Name:<input type="text" name="txtname">
+<br>
+Comments:
+<textarea name="txtcom"></textarea>
+<br>
+<input type="submit" name="btn1" value="SUBMIT">
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+
+// DO YOUR HOMEWORK HERE
+
+}
+
+?>
+</body>
+</html>
+
+image.png
+
+Homework:
+  Do the following on the above programs:
+1) Create File with Name of username with ".txt" extension by PHP
+2) Write the comment from HTML Page to inside that file by PHP

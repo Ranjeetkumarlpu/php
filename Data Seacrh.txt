@@ -1,0 +1,173 @@
+Today's topics covered:
+
+1) Create a Student Database as follows:
+image.png
+
+And entry some records within this table as follows:
+
+image.png
+
+2) MySQL Database all records showby click on a button in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+<input type="submit" name="btn1" value="LOAD ALL DATA">
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+
+?>
+<table width="300px" border=2>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+$con=mysqli_connect("localhost","root","","nsti");
+
+if($con)
+{
+$q="SELECT * FROM `students`";
+$r=mysqli_query($con,$q);
+
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<td>$f[0]</td>
+<td>$f[1]</td>
+<td>$f[2]</td>
+<td>$f[3]</td>
+</tr>";
+}
+}
+?>
+</table>
+<?php
+
+mysqli_close($con);
+}
+
+?>
+</body>
+</html>
+image.png
+3) Search Database record by ID in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+ID:<input type="text" name="txt1">
+<input type="submit" name="btn1" value="SEARCH">
+</form>
+
+<?php
+if(isset($_POST["btn1"]))
+{
+
+?>
+<table width="300px" border=2>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+$con=mysqli_connect("localhost","root","","nsti");
+
+if($con)
+{
+$a=$_POST["txt1"];
+$q="SELECT * FROM `students` WHERE `id` = $a";
+$r=mysqli_query($con,$q);
+
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<td>$f[0]</td>
+<td>$f[1]</td>
+<td>$f[2]</td>
+<td>$f[3]</td>
+</tr>";
+}
+}
+?>
+</table>
+<?php
+mysqli_close($con);
+}
+?>
+</body>
+</html>
+image.png
+4) Search records from database within condition by PHP:
+ <!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+ID:<input type="text" name="txt1">
+<input type="submit" name="btn1" value="SEARCH">
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+?>
+<?php
+$con=mysqli_connect("localhost","root","","nsti");
+if($con)
+{
+$a=$_POST["txt1"];
+$q="SELECT * FROM `students` WHERE `id` = $a";
+$r=mysqli_query($con,$q);
+$c=mysqli_num_rows($r);
+// mysqli_num_rows() used to get a total number of records searched.
+if($c>0)// checking if any records found
+{
+?>
+<table width="300px" border=2>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<td>$f[0]</td>
+<td>$f[1]</td>
+<td>$f[2]</td>
+<td>$f[3]</td>
+</tr>";
+}
+}
+else // if no record found
+{
+echo "Records not found!!";
+}
+}
+?>
+</table>
+<?php
+mysqli_close($con);
+}
+?>
+</body>
+</html>
+image.png
+  Homework:
+Do the same work of the above program in PHP for search records by ID and displayed from the database ITI which you all created in previous homework.

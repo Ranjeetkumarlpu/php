@@ -1,0 +1,233 @@
+Today's topics covered:
+
+1) Notes on SQL:
+SQL Statement:
+
+For search record:
+
+select * from tablename where fieldname=value1
+
+For Update record:
+
+update tablename set fieldname2=value, fieldname2=value where fieldname1=value
+
+For Delete record:
+
+delete from tablename where fieldname=value
+
+2) Create a Student Database as follows:
+image.png
+
+And entry some records within this table as follows:
+
+image.png
+
+3) MySQL Database search all records by surname in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+Enter Surname of Name:
+<input type="text" name="t1">
+<input type="submit" name="b1" value="SEARCH">
+</form>
+<?php
+
+if(isset($_POST["b1"]))
+{
+$a=$_POST["t1"];
+$con=mysqli_connect("localhost","root","","nsti");
+
+if($con)
+{
+$q="SELECT * FROM `students` where sname like '%$a'";
+// here like used for Search name by a letter.
+// % means rest of all
+// '%Das' means end Name with word Das
+$r=mysqli_query($con,$q);
+$c=mysqli_num_rows($r);
+
+if($c>0) // if record found
+{
+?>
+<table width="300px" border=2>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<td>$f[0]</td>
+<td>$f[1]</td>
+<td>$f[2]</td>
+<td>$f[3]</td>
+</tr>";
+}
+}
+else // if record not found
+{
+echo "Record not found";
+}
+}
+else
+{
+echo "Not Connect";
+}
+mysqli_close($con);
+}
+?>
+</table>
+</body>
+</html>
+image.png
+4) Show all and Update Database record in a HTML Table by PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<table width="400px" border="2px">
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+$con=mysqli_connect("localhost","root","","nsti");
+if($con)
+{
+$q="select * from students";
+$r=mysqli_query($con,$q);
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<form method='post'>
+<td><input type='text' name='txtid' readonly value='$f[0]'></td>
+<td><input type='text' name='txtname' value='$f[1]'></td>
+<td><input type='text' name='txtcourse' value='$f[2]'></td>
+<td><input type='text' name='txtmarks' value='$f[3]'></td>
+<td><input type='submit' name='btn2' value='UPDATE'></td>
+
+</form>
+</tr>";
+}
+}
+else
+{
+echo "Not connect";
+}
+mysqli_close($con);
+?>
+</table>
+<?php
+if(isset($_POST["btn2"]))
+{
+$id=$_POST["txtid"];
+$nm=$_POST["txtname"];
+$cr=$_POST["txtcourse"];
+$mk=$_POST["txtmarks"];
+$con=mysqli_connect("localhost","root","","nsti");
+if($con)
+{
+$q="update students set sname='$nm', course='$cr',marks='$mk' where id=$id"; // SQL Statement for Update
+$r=mysqli_query($con,$q);
+if($r)
+{
+header("Location:showalleach.php");// reload the page
+}
+else
+{
+echo "Failed to updation";
+}
+}
+else
+{
+echo "Not connect";
+}
+mysqli_close($con);
+}
+?>
+</body>
+</html>
+image.png
+ 
+4) Show all and Delete Database record in a HTML Table by PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<table width="400px" border="2px">
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+$con=mysqli_connect("localhost","root","","nsti");
+if($con)
+{
+$q="select * from students";
+$r=mysqli_query($con,$q);
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<form method='post'>
+<td><input type='text' name='txtid' readonly value='$f[0]'></td>
+<td><input type='text' name='txtname' value='$f[1]'></td>
+<td><input type='text' name='txtcourse' value='$f[2]'></td>
+<td><input type='text' name='txtmarks' value='$f[3]'></td>
+<td><input type='submit' name='btn2' value='DELETE'></td>
+</form>
+</tr>";
+}
+}
+else
+{
+echo "Not connect";
+}
+mysqli_close($con);
+?>
+</table>
+<?php
+if(isset($_POST["btn2"]))
+{
+$id=$_POST["txtid"];
+
+$con=mysqli_connect("localhost","root","","nsti");
+if($con)
+{
+$q="delete from students where id=$id"; // SQL Statement for Delete
+$r=mysqli_query($con,$q);
+if($r)
+{
+header("Location:showalldelete.php");// reload the page
+}
+else
+{
+echo "Failed to updation";
+}
+}
+else
+{
+echo "Not connect";
+}
+mysqli_close($con);
+}
+?>
+</body>
+</html>
+image.png
+ Homework:
+Do as homework as combined above two programs for Show all records within a HTML table, and any user can update as well as delete records by click on Button, please, do a task on ITI Database which you already did in previous homework.

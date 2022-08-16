@@ -1,0 +1,105 @@
+Today's topics covered:
+
+1) Notes on Primary Key of Database:
+
+What is the Primary key in Database?
+
+   Primary key is applied on a field of a table within a database, it actually restricts the field to prevent duplicate entry.
+   Please, note one table has only one primary key, it is not applied on multiple fields within the same table.
+
+2) Create a Database: usersdb and follow the structure of table of this database:
+The structure of table:
+image.png
+
+The data inside the table:
+image.png3) Login by username and password from database in PHP:
+     userlogin.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+USERNAME:
+<input type="text" name="txtun">
+<br>
+PASSWORD:
+<input type="password" name="txtup">
+<br>
+<input type="submit" name="btn1" value="LOGIN">
+<br>
+<a href="newuser.php">NEW USER</a>
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+$a=$_POST["txtun"];
+$b=$_POST["txtup"];
+$con=mysqli_connect("localhost","root","","usersdb");
+if($con)
+{
+$q="select * from users where username='$a' and userpassword='$b'";
+$r=mysqli_query($con,$q);
+$c=mysqli_num_rows($r);
+if($c>0)
+{
+//echo "Login succeed";
+header("Location:userinbox.php");
+}
+else
+{
+echo "Invalid Login";
+}
+}
+else
+{
+echo "Not connect";
+}
+mysqli_close($con);
+}
+?>
+</body>
+</html>
+image.png
+userinbox.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<h1>Welcome</h1>
+</body>
+</html>
+
+4) Create a Signup form for insert new user into the above database:
+  newuser.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+USERNAME:
+<input type="text" name="txtun">
+<br>
+PASSWORD:
+<input type="password" name="txtup">
+<br>
+<input type="submit" name="btn1" value="REGISTER">
+<br>
+<a href="userlogin.php">LOGIN</a>
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+// DO HERE THE INSERTION PROGRAM AS HOMEWORK
+}
+?>
+</body>
+</html>
+image.png
+ Homework:
+  Do the record insertion program for add new user into the database "usersdb" in the above programming code.

@@ -1,0 +1,121 @@
+Today's topics covered:
+
+1) Notes on Cookies in PHP:
+
+What are Cookies in PHP?
+   Cookies are also predefined variables like session, but Cookies store userdata into the user system, not in the server as like session.
+
+ Advantages of Cookies:
+    1) Cookies carry data from one to another page without form submission method.
+    2) Cookies are basically used for remembering user information like name, address , password into the client machine.
+
+ Predefine Cookies function in PHP:
+
+  setcookie()= Create a Cookie variable for a specific timings.
+
+   $_COOKIE[]=Display Cookie value 
+
+2) Cookie create and display in PHP:
+
+       cookie1.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$a="Hello";
+setcookie("ab",$a,time()+10);
+// setcookie(cookie name, user value, timings) used for create a cookie for a specific timings
+echo "Cookie created";
+?>
+</body>
+</html>
+
+         cookie2.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+echo $_COOKIE["ab"];// display the cookie value
+?>
+</body>
+</html>
+
+3) Login with Remember me Option in PHP:
+
+   login.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+USERNAME:
+<input type="text" name="txtnm" value="<?php
+if(isset($_COOKIE['un']))
+{
+echo $_COOKIE['un'];
+}
+else
+{
+echo "";
+}
+
+?>">
+<br>
+PASSWORD:
+<input type="password" name="txtpass">
+<br>
+<input type="checkbox" name="chk" value="rem">Remember me
+<br>
+<input type="submit" name="btn1" value="LOGIN">
+</form>
+<?php
+if(isset($_POST["btn1"]))
+{
+$u="admin";
+$p="123";
+
+if($_POST["txtnm"]==$u && $_POST["txtpass"]==$p)
+{
+if(isset($_POST["chk"])) // if checkbox is checked
+{
+setcookie("un",$_POST["txtnm"],time()+20*100*400);
+setcookie("up",$_POST["txtpass"],time()+20*100*400);
+}
+else // if checkbox is unchecked
+{
+setcookie("un","",time()-1); // for delete cookie
+setcookie("up","",time()-1);
+}
+
+header("Location:inbox.php");
+}
+else
+{
+echo "Invalid Login";
+}
+
+}
+
+?>
+</body>
+</html>
+image.png
+        inbox.php
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<h1>Welcome</h1>
+</body>
+</html>
+__________________________

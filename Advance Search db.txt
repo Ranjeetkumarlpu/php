@@ -1,0 +1,138 @@
+Today's topics covered:
+
+1) Create a Student Database as follows:
+image.png
+
+And entry some records within this table as follows:
+
+image.png
+
+2) MySQL Database search all records by name in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+Enter Name:
+<input type="text" name="t1">
+<input type="submit" name="b1" value="SEARCH">
+</form>
+<?php
+if(isset($_POST["b1"]))
+{
+$a=$_POST["t1"];
+$con=mysqli_connect("localhost","root","","nsti");
+
+if($con)
+{
+$q="SELECT * FROM `students` where sname='$a'";
+$r=mysqli_query($con,$q);
+$c=mysqli_num_rows($r);
+
+if($c>0) // if record found
+{
+?>
+<table width="300px" border=2>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<td>$f[0]</td>
+<td>$f[1]</td>
+<td>$f[2]</td>
+<td>$f[3]</td>
+</tr>";
+}
+}
+else // if record not found
+{
+echo "Record not found";
+}
+}
+else
+{
+echo "Not Connect";
+}
+mysqli_close($con);
+}
+
+?>
+</table>
+</body>
+</html>
+image.png
+3) Search Database record by Initial Letter of Name in PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+Enter Initial Letter of Name:
+<input type="text" name="t1">
+<input type="submit" name="b1" value="SEARCH">
+</form>
+<?php
+
+if(isset($_POST["b1"]))
+{
+$a=$_POST["t1"];
+$con=mysqli_connect("localhost","root","","nsti");
+
+if($con)
+{
+$q="SELECT * FROM `students` where sname like '$a%'";
+// here like used for Search name by a letter.
+// % means rest of all
+// 'R%' means start Name with letter R
+$r=mysqli_query($con,$q);
+$c=mysqli_num_rows($r);
+
+if($c>0) // if record found
+{
+?>
+<table width="300px" border=2>
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>COURSE</th>
+<th>MARKS</th>
+</tr>
+<?php
+while($f=mysqli_fetch_array($r))
+{
+echo "<tr>
+<td>$f[0]</td>
+<td>$f[1]</td>
+<td>$f[2]</td>
+<td>$f[3]</td>
+</tr>";
+}
+}
+else // if record not found
+{
+echo "Record not found";
+}
+}
+else
+{
+echo "Not Connect";
+}
+mysqli_close($con);
+}
+?>
+</table>
+</body>
+</html>
+image.png
+  Homework:
+Do the same work of the above program in PHP for search records by Trainees Name and displayed from the database ITI which you all created in previous homework.

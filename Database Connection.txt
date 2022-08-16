@@ -1,0 +1,118 @@
+Today's topics covered:
+
+1) Create a Student Database as follows:
+image.png
+
+2) MySQL Database Connection with PHP:
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<?php
+$con=mysqli_connect("localhost","root","","nsti");
+// mysqli_connect(servername,username,password,databasename) used for connect mysql with php
+//mysql_connect() is invalid for new version of PHP
+// for new version used mysqli here i means improvement
+if($con) // connection checking
+{
+echo "Connection established";
+}
+else
+{
+echo "Not connected";
+
+}
+
+mysqli_close($con);
+// mysqli_close() used for closing the opened connection from the database.
+
+?>
+</body>
+</html>
+
+3) Database record insert by PHP:
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form method="post">
+ID:
+<input type="text" name="txtid">
+<br>
+NAME:
+<input type="text" name="txtname">
+<br>
+COURSE:
+<select name="txtcourse">
+<option></option>
+<option>BCA</option>
+<option>MCA</option>
+<option>BTech</option>
+<option>MTech</option>
+</select>
+<br>
+MARKS:
+<input type="text" name="txtmarks">
+<br>
+<input type="submit" name="btn" value="ADD">
+</form>
+
+<?php
+if(isset($_POST["btn"]))
+{
+$con=mysqli_connect("localhost","root","","nsti");
+        $a=$_POST["txtid"];
+        $b=$_POST["txtname"];
+        $c=$_POST["txtcourse"];
+        $d=$_POST["txtmarks"];
+if($con)
+{
+$q="INSERT INTO `students` (`id`, `sname`, `course`, `marks`) VALUES ('$a', '$b', '$c', '$d');"; // SQL Statement
+$r=mysqli_query($con,$q);
+// mysqli_query() used for execute the SQL Statement for insert record
+
+if($r)
+{
+echo "Data added";
+}
+else
+{
+echo "Data not added";
+}
+}
+else
+{
+echo "Not connected";
+}
+
+mysqli_close($con);
+}
+
+?>
+</body>
+</html>
+
+image.png
+4) Notes on SQL:
+
+SQL
+
+What is SQL?
+
+   SQL Stands for Structural Query Language, it is a common coding language used in every type of database (except MongoDB) for add, delete, update and search record from database table.
+
+    Also SQL Statement used in Server Side Programming for communicating databases.
+
+   Some commonly used SQL Statements:
+
+   a) For insert record:
+
+   insert into tablename(field1,field2) values(value1,value2);
+
+  Homework:
+Do the same work for data insert from PHP to the database ITI which you all created in previous homework.
